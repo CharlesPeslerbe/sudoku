@@ -4,52 +4,40 @@
 
 
 /*****************  FONCTIONS  *********************/
-
-function numberSelection(number){
-    switch (number) {
-        case 1:
-            selectedNumber = 1;
-            break;
-        case 2:
-            selectedNumber = 2;
-            break;
-        case 3:
-            selectedNumber = 3;
-            break;
-        case 4:
-            selectedNumber = 4;
-            //reloadHover();
-            //document.getElementById("bouton4").className = "box align selected";
-            break;
-        case 5:
-            selectedNumber = 5;
-            //reloadHover();
-            //document.getElementById("bouton5").className = "box align selected";
-            break;
-        case 6:
-            selectedNumber = 6;
-            //reloadHover();
-            //document.getElementById("bouton6").className = "box align selected";
-            break;
-        case 7: 
-            selectedNumber = 7;
-            //reloadHover();
-            //document.getElementById("bouton7").className = "box align selected";
-            break;
-        case 8:     
-            selectedNumber = 8;  
-            //reloadHover();
-            //document.getElementById("bouton8").className = "box align selected";
-            break;
-        case 9:         
-            selectedNumber = 9;      
-            //reloadHover();
-            //document.getElementById("bouton9").className = "box align selected";
-            break;
-    }
+function solveSudoku() {
+    estValide(sudoku, 0);
+    afficheGrille();
 }
 
-
+function afficheGrille() {
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            const index = i * 9 + j;
+            if (sudoku[i][j] == 0){
+                boxes[index].textContent = "";
+            }
+            else{
+                boxes[index].textContent = sudoku[i][j];
+            }
+        }
+    }
+}
+function initializeSudoku(){
+    for (let i = 0; i < 9; i++){
+        for (let j = 0; j < 9; j++){
+            sudoku[i][j] = 0;
+        }
+    }
+    randomNumber = Math.floor(Math.random() * 9) + 1;
+    randomIndex = Math.floor(Math.random() * 3);
+    x = randomIndex%9;
+    y = Math.floor(randomIndex/9);
+    sudoku[y][x] = randomNumber;
+    afficheGrille();
+    //estValide(sudoku, 0);
+    //Cacher Éléments
+    
+}
 
 /*****************  FONCTIONS RÉSOLUTION *********************/ 
 
@@ -116,39 +104,14 @@ function estValide(grille, position) {
     return false;
 }
 
-function initializeSudoku(){
-    let sudoku = [
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-    ];
-    afficheGrille();
-    let randomNumber = Math.floor(Math.random() * 9) + 1;
-    let randomIndex = Math.floor(Math.random() * 3);
-    let x = randomIndex%9;
-    let y = Math.floor(randomIndex/9);
-    sudoku[y][x] = randomNumber;
-    afficheGrille();
-    estValide(sudoku, 0);
-    afficheGrille();
-}
+
 
 /*****************  VARIABLES  *********************/ 
 
-const grid = document.querySelector('.grid');
-const boxes = grid.querySelectorAll('.box2');
-const buttons = document.querySelectorAll('.box');
-
-let selectedNumber = 1;
-
-// On crée un tableau 9x9 pour le sudoku et on le remplit de 0 (case vide)
-const sudoku = [
+let grid = document.querySelector('.grid');
+let boxes = grid.querySelectorAll('.box2');
+let buttons = document.querySelectorAll('.box');
+let sudoku = [
     [0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0],
@@ -159,34 +122,15 @@ const sudoku = [
     [0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0],
 ];
-document.getElementById("boutonNew").addEventListener("click", initializeSudoku);
-document.getElementById("boutonSolve").addEventListener("click", solveSudoku);
+let selectedNumber = 1;
+let randomNumber;
+let randomIndex;
+let x; 
+let y;
 
-// On génére un nombre aléatoire entre 1 et 9
-const randomNumber = Math.floor(Math.random() * 9) + 1;
-
-// On génére un indice aléatoires entre 0 et 80 (81 cases  9x9)
-//const randomIndex = Math.floor(Math.random() * 81);
-
-// Pour des soucis de génération plus aléatoire on génére un indice aléatoire entre 0 et 3  
-const randomIndex = Math.floor(Math.random() * 3);
-
-// On l'affiche dans la grille
-//boxes[randomIndex].textContent = randomNumber;
-
-// Ensuite on stocke la valeur du nombre aléatoire dans notre grille
-const x = randomIndex%9;
-const y = Math.floor(randomIndex/9);
-sudoku[y][x] = randomNumber;
-
-// On résout le sudoku avec 1 seule case remplie
-//estValide(sudoku, 0);
+initializeSudoku();
 
 
-// On affiche le sudoku résolu
-afficheGrille() ;
-
-// On affiche les cases souhaitées
 
 // Placer un nombre
 // On ajoute un événement de clic à chaque case de la grille
@@ -207,29 +151,53 @@ boxes.forEach((box, index) => {
 // Placer un nombre
 // On ajoute un événement de clic à chaque case de la grille
 buttons.forEach((button, index) => {
-    button.addEventListener("click", () => {
-        numberSelection(index+1);
+    button.addEventListener("click", function() {
+        //supprimer selected
+        buttons.forEach((button, index) => {
+            button.classList.remove('selected');
+        });
+        // Obtenez l'identifiant du bouton cliqué
+        this.classList.add('selected');
+        const buttonId = this.id;
+        // Effectuez une action en fonction de l'identifiant du bouton
+        switch (buttonId) {
+            case "bouton1":
+                selectedNumber = 1;
+                break;
+            case "bouton2":
+                selectedNumber = 2;
+                break;
+            case "bouton3":
+                selectedNumber = 3; 
+                break;
+            case "bouton4":
+                selectedNumber = 4;
+                break;
+            case "bouton5":
+                selectedNumber = 5;
+                break;
+            case "bouton6":
+                selectedNumber = 6;
+                break;
+            case "bouton7":
+                selectedNumber = 7;
+                break;
+            case "bouton8":
+                selectedNumber = 8;
+                break;
+            case "bouton9":
+                selectedNumber = 9;
+                break;
+            case "boutonSolve":
+                solveSudoku();
+                break;
+            case "boutonNew":
+                initializeSudoku();
+                break;
+            // Ajoutez d'autres cas pour d'autres boutons si nécessaire
+        }
     });
 });
 
 
 
-function solveSudoku() {
-    afficheGrille();
-    estValide(sudoku, 0);
-    afficheGrille();
-}
-
-function afficheGrille() {
-    for (let i = 0; i < 9; i++) {
-        for (let j = 0; j < 9; j++) {
-            const index = i * 9 + j;
-            if (sudoku[i][j] == 0){
-                boxes[index].textContent = "";
-            }
-            else{
-                boxes[index].textContent = sudoku[i][j];
-            }
-        }
-    }
-}
