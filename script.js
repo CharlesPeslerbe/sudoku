@@ -22,9 +22,25 @@ function afficheGrille() {
         }
     }
 }
+function hideElements(grid, numHidden) {
+    const size = 9;
+    let count = 0;
+
+    while (count < numHidden) {
+        const row = Math.floor(Math.random() * size);
+        const col = Math.floor(Math.random() * size);
+
+        if (grid[row][col] !== 0) {
+            grid[row][col] = 0;
+            count++;
+        }
+    }
+    afficheGrille();
+}
 function initializeSudoku(){
     for (let i = 0; i < 9; i++){
         for (let j = 0; j < 9; j++){
+
             sudoku[i][j] = 0;
         }
     }
@@ -34,11 +50,32 @@ function initializeSudoku(){
     y = Math.floor(randomIndex/9);
     sudoku[y][x] = randomNumber;
     afficheGrille();
-    //estValide(sudoku, 0);
-    //Cacher Éléments
+    estValide(sudoku, 0);
     
+    //Cacher Éléments
+    hideElements(sudoku, 50);
+    // element restant immuables
+    let copy = [...sudoku];
 }
 
+function compterCoup(){
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            if (sudoku[i][j] !== 0) {
+                coup++;
+            }
+        }
+    }
+}
+
+function resetGame() {
+    for (let i = 0; i < 9; i++){
+        for (let j = 0; j < 9; j++){
+            sudoku[i][j] = copy[i][j];
+        }
+    }
+    afficheGrille();
+}
 /*****************  FONCTIONS RÉSOLUTION *********************/ 
 
 function absentSurLigne(k, grille, row) {
@@ -94,7 +131,6 @@ function estValide(grille, position) {
     for (let k = 1; k <= 9; k++) {
         if (absentSurLigne(k, grille, i) && absentSurColonne(k, grille, j) && absentSurBloc(k, grille, i, j)) {
             grille[i][j] = k;
-            console.log(grille);
             if (estValide(grille, position + 1)) {
                 return true;
             }
@@ -127,10 +163,13 @@ let randomNumber;
 let randomIndex;
 let x; 
 let y;
+let coup = 0;
+let min = 0;
+let sec = 0;
+let h = 0;
+
 
 initializeSudoku();
-
-
 
 // Placer un nombre
 // On ajoute un événement de clic à chaque case de la grille
@@ -141,10 +180,18 @@ boxes.forEach((box, index) => {
         const colIndex = index % 9; // Indice de colonne
         // On vérifie si la case est vide
         if (sudoku[rowIndex][colIndex] === 0) {
-            // On place le nombre sélectionné dans la case
-            sudoku[rowIndex][colIndex] = selectedNumber;
-            // On met à jour l'affichage de la grille
-            afficheGrille();
+            if(absentSurBloc(selectedNumber, sudoku, rowIndex, colIndex) && absentSurColonne(selectedNumber, sudoku, colIndex) && absentSurLigne(selectedNumber, sudoku, rowIndex)){
+                // On place le nombre sélectionné dans la case
+                sudoku[rowIndex][colIndex] = selectedNumber;
+                // On met à jour l'affichage de la grille
+                afficheGrille();
+                // On vérifie si la grille est résolue
+                if (compterCoup() >= 81) {
+                    if (estValide(sudoku.slice(), 0)) {
+                        alert("Bravo, vous avez résolu la grille !");
+                    }
+                }
+            }
         }
     });
 });
@@ -193,6 +240,9 @@ buttons.forEach((button, index) => {
                 break;
             case "boutonNew":
                 initializeSudoku();
+                break;
+            case "boutonReset":
+                resetGame();
                 break;
             // Ajoutez d'autres cas pour d'autres boutons si nécessaire
         }
