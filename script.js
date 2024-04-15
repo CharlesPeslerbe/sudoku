@@ -55,7 +55,12 @@ function initializeSudoku(){
     //Cacher Éléments
     hideElements(sudoku, 50);
     // element restant immuables
-    let copy = [...sudoku];
+    for (let i = 0; i < 9; i++){
+        for (let j = 0; j < 9; j++){
+            copy[i][j] = sudoku[i][j];
+        }
+    }
+    
 }
 
 function compterCoup(){
@@ -69,9 +74,15 @@ function compterCoup(){
 }
 
 function resetGame() {
+    afficheGrille();
     for (let i = 0; i < 9; i++){
         for (let j = 0; j < 9; j++){
-            sudoku[i][j] = copy[i][j];
+            if (copy[i][j] == 0) {
+                sudoku[i][j] = 0;
+            }
+            else {
+                sudoku[i][j] = copy[i][j];
+            }
         }
     }
     afficheGrille();
@@ -167,7 +178,7 @@ let coup = 0;
 let min = 0;
 let sec = 0;
 let h = 0;
-
+let copy = Array.from(Array(9), () => new Array(9));
 
 initializeSudoku();
 
