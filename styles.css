@@ -92,7 +92,7 @@ body {
         background-color: #252a34;
         margin: 0;
         padding: 0;
-        width: 100vw;
+        width: 45vw;
         height: 95vh;
         display: grid;
         text-align: center;
@@ -100,7 +100,7 @@ body {
         font-size: 14px;
     }
     .container {
-        width: 100vw;
+        width: 45vw;
         height: 80px;
         grid-template-columns: repeat(9, 1fr);
         grid-template-rows: 1fr 1fr 1fr;
@@ -109,7 +109,7 @@ body {
         font-size: 16px;
     }
     .grid {
-        width: 96vh;
+        width: 45vw;
         height: 300px;
         margin: 20px auto;
     }
