@@ -4,6 +4,8 @@
 
 /*****************  VARIABLES  *********************/ 
 
+const grid = document.querySelector('.grid');
+const boxes = grid.querySelectorAll('.box2');
 
 // On crée un tableau 9x9 pour le sudoku et on le remplit de 0 (case vide)
 const sudoku = [
@@ -29,13 +31,13 @@ const randomNumber = Math.floor(Math.random() * 9) + 1;
 // Pour des soucis de génération plus aléatoire on génére un indice aléatoire entre 0 et 3  
 const randomIndex = Math.floor(Math.random() * 3);
 
+
+
 // On l'affiche dans la grille
-const grid = document.querySelector('.grid');
-const boxes = grid.querySelectorAll('.box2');
-boxes[randomIndex].textContent = randomNumber;
+//boxes[randomIndex].textContent = randomNumber;
 
 
-// Ensuite on stocke la valeurs du sudoku dans notre grille
+// Ensuite on stocke la valeur du nombre aléatoire dans notre grille
 const x = randomIndex%9;
 const y = Math.floor(randomIndex/9);
 sudoku[y][x] = randomNumber;
@@ -43,8 +45,11 @@ sudoku[y][x] = randomNumber;
 // On résout le sudoku avec 1 seule case remplie
 estValide(sudoku, 0);
 
+
 // On affiche le sudoku résolu
 //afficheGrille() ;
+
+// On affiche les cases souhaitées
 
 function solveSudoku() {
     afficheGrille();

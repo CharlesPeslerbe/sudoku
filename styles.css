@@ -86,3 +86,36 @@ body {
 .bot {
     border-bottom: 3px solid #000;
 }
+
+@media only screen and (max-width: 768px) {
+    body {
+        background-color: #252a34;
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 95vh;
+        display: grid;
+        text-align: center;
+        padding-top: 3vh;
+        font-size: 14px;
+    }
+    .container {
+        width: 100vw;
+        height: 80px;
+        grid-template-columns: repeat(9, 1fr);
+        grid-template-rows: 1fr 1fr 1fr;
+    }
+    .container h3 {
+        font-size: 16px;
+    }
+    .grid {
+        width: 96vh;
+        height: 300px;
+        margin: 20px auto;
+    }
+    .box2 {
+        font-size: 1.5rem;
+    }
+}
+
+
