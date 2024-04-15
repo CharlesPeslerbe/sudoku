@@ -92,26 +92,28 @@ body {
         background-color: #252a34;
         margin: 0;
         padding: 0;
-        width: 45vw;
-        height: 95vh;
+        width: 100vw; /* Largeur totale de l'écran */
+        height: 100vh; /* Hauteur totale de l'écran */
         display: grid;
+        place-items: center; /* Centrer le contenu verticalement et horizontalement */
         text-align: center;
-        padding-top: 3vh;
         font-size: 14px;
     }
     .container {
-        width: 45vw;
-        height: 80px;
+        width: 90vw; /* Largeur de 90% de la largeur de l'écran */
+        height: auto; /* Hauteur automatique en fonction du contenu */
+        display: grid;
         grid-template-columns: repeat(9, 1fr);
-        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-rows: repeat(3, auto); /* Trois lignes de contenu */
+        gap: 5px; /* Espacement entre les éléments */
     }
     .container h3 {
         font-size: 16px;
     }
     .grid {
-        width: 45vw;
-        height: 300px;
-        margin: 20px auto;
+        width: 90vw; /* Largeur de 90% de la largeur de l'écran */
+        height: auto; /* Hauteur automatique en fonction du contenu */
+        margin: 20px auto; /* Marge de 20px sur les côtés */
     }
     .box2 {
         font-size: 1.5rem;
