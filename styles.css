@@ -1,0 +1,88 @@
+* {
+    color: white;
+    font-family: sans-serif;
+    transition: 0.2s ease-in-out;
+    border: 1px solid #000;
+}
+.align {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+body {
+    background-color: #252a34;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 95vh;
+    display: grid;
+    text-align: center;
+    padding-top: 5vh;
+}
+.container {
+    width: 630px;
+    height: 110px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: 1fr 1fr 1fr;
+    position: relative;
+}
+.container h3 {
+    grid-column-start: 1;
+    grid-column-end: 10;
+    margin: 0;
+}
+.container .box {
+    border: 3px solid #000;
+}
+.container .box:hover {
+    background-color: #C5AA2F;
+}
+.bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 70x;
+    height: 10px;
+    background-color: white;
+    z-index: -1;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    width: 550px;
+    height: 550px;
+    margin: 30px auto;
+    border: 2px solid #000;
+}
+.box2 {
+    cursor: pointer;
+    font-size: 2rem;
+    font-weight: 700;
+
+}
+.box2:hover {
+    background-color: #C5AA2F;
+}
+
+.selected {
+    background-color: #C5AA2F;
+}
+
+.notSelected {
+    background-color: #252a34;
+}
+.top {
+    border-top: 3px solid #000;
+}
+.left {
+    border-left: 3px solid #000;
+}
+.right {
+    border-right: 3px solid #000;
+}
+.bot {
+    border-bottom: 3px solid #000;
+}
